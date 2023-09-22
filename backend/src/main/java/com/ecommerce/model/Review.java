@@ -4,20 +4,35 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+
 import java.util.Objects;
 
 @Entity
+@Table(name = "review")
 public class Review {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //id + 1 when add new product
+    @SequenceGenerator(
+            name = "review_sequence",
+            sequenceName = "review_sequence",
+            allocationSize = 0
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "review_sequence"
+    )
     private Long id;
 
+    @Column(nullable = false, unique = true, length = 4000) //auto add id when add new product (unique id)    
     private String review;
 
     @ManyToOne

@@ -1,5 +1,6 @@
 package com.ecommerce.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -7,18 +8,22 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
+@Table(name = "category")
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    // id + 1 when add new product
+    @SequenceGenerator(name = "category_sequence", sequenceName = "category_sequence", allocationSize = 0)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_sequence")
     private Long id;
 
-    @NotNull
-    @Size(max = 50)
+    @Column(nullable = false, unique = true, length = 4000) // auto add id when add new product (unique id)
     private String name;
 
     @ManyToOne

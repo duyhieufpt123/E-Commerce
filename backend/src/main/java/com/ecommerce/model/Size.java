@@ -2,7 +2,13 @@ package com.ecommerce.model;
 
 import java.util.Objects;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
+
+@Table(name = "product_sizes")
 public class Size {
+
+    @Column(nullable = false, unique = false, length = 4000) //auto add id when add new product (unique id)
     private String name;
     private int quantity;
 

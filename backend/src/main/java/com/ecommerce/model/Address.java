@@ -9,30 +9,36 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "address")
 public class Address {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+        @Id
+    //id + 1 when add new product
+    @SequenceGenerator(
+            name = "address_sequence",
+            sequenceName = "address_sequence",
+            allocationSize = 0
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "address_sequence"
+    )
     private Long id;
-
-    @Column(name = "first_name")
+    @Column(nullable = false, unique = true, length = 4000)
     private String firstName;
 
-    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "street_address")
     private String streetAdress;
 
-    @Column(name = "city")
     private String city;
 
-    @Column(name = "state")
     private String state;
 
-    @Column(name = "zip_code")
     private String zipCode;
 
     @ManyToOne
@@ -43,6 +49,7 @@ public class Address {
     private String mobile;
 
     public Address() {
+        super();
     }
 
     public Address(Long id, String firstName, String lastName, String streetAdress, String city, String state,
