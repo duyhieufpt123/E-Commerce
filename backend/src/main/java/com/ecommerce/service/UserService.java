@@ -1,7 +1,7 @@
 package com.ecommerce.service;
 
-import com.example.backend.backend.exception.UserException;
-import com.example.backend.backend.model.User;
+import com.ecommerce.exception.UserException;
+import com.ecommerce.model.User;
 
 public interface UserService {
     public User findUserbyId(Long userId) throws UserException;
