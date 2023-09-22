@@ -1,10 +1,10 @@
 package com.ecommerce.request;
+
 import java.util.Objects;
 
 public class LoginRequest {
     private String email;
     private String password;
-
 
     public LoginRequest() {
     }
@@ -59,9 +59,9 @@ public class LoginRequest {
     @Override
     public String toString() {
         return "{" +
-            " email='" + getEmail() + "'" +
-            ", password='" + getPassword() + "'" +
-            "}";
+                " email='" + getEmail() + "'" +
+                ", password='" + getPassword() + "'" +
+                "}";
     }
-    
+
 }

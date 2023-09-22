@@ -16,36 +16,25 @@ import jakarta.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name = "rating")
 public class Rating {
 
     @Id
-    //id + 1 when add new product
-    @SequenceGenerator(
-            name = "rating_sequence",
-            sequenceName = "rating_sequence",
-            allocationSize = 0
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "rating_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 4000) //auto add id when add new product (unique id)    
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false) // Change the column name to "user_id"
     private User user;
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id", nullable = false) // Change the column name to "product_id"
     private Product product;
 
+    @Column(name = "rating")
     private double rating;
 
     private LocalDateTime createdAt;
-
 
     public Rating() {
     }
@@ -97,47 +86,5 @@ public class Rating {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-
-    public Rating id(Long id) {
-        setId(id);
-        return this;
-    }
-
-    public Rating user(User user) {
-        setUser(user);
-        return this;
-    }
-
-    public Rating product(Product product) {
-        setProduct(product);
-        return this;
-    }
-
-    public Rating rating(double rating) {
-        setRating(rating);
-        return this;
-    }
-
-    public Rating createdAt(LocalDateTime createdAt) {
-        setCreatedAt(createdAt);
-        return this;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, user, product, rating, createdAt);
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-            " id='" + getId() + "'" +
-            ", user='" + getUser() + "'" +
-            ", product='" + getProduct() + "'" +
-            ", rating='" + getRating() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
-            "}";
-    }
-    
 
 }

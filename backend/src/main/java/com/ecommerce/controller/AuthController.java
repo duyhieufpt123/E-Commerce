@@ -74,7 +74,6 @@ public class AuthController {
         String username = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
-        
         Authentication authentication = authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return null;
@@ -83,10 +82,10 @@ public class AuthController {
     private Authentication authenticate(String username, String password) {
         UserDetails userDetails = customUserService.loadUserByUsername(username);
 
-        if(userDetails == null){
+        if (userDetails == null) {
             throw new BadCredentialsException("Invalid Username");
         }
-        if(!passwordEncoder.matches(password, userDetails.getPassword())){
+        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
             throw new BadCredentialsException("Invalid Passsword");
         }
 

@@ -17,22 +17,11 @@ import jakarta.persistence.Table;
 import java.util.Objects;
 
 @Entity
-@Table(name = "review")
 public class Review {
     @Id
-    //id + 1 when add new product
-    @SequenceGenerator(
-            name = "review_sequence",
-            sequenceName = "review_sequence",
-            allocationSize = 0
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "review_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 4000) //auto add id when add new product (unique id)    
     private String review;
 
     @ManyToOne

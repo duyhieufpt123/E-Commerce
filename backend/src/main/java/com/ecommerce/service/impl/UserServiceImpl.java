@@ -8,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.ecommerce.model.User;
-import com.ecommerce.repository.UserRepository;
+import com.example.backend.backend.model.User;
+import com.example.backend.backend.repository.UserRepository;
 
 public class UserServiceImpl implements UserDetailsService {
 

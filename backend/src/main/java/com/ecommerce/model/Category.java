@@ -15,15 +15,13 @@ import jakarta.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-@Table(name = "category")
 public class Category {
     @Id
-    // id + 1 when add new product
-    @SequenceGenerator(name = "category_sequence", sequenceName = "category_sequence", allocationSize = 0)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_sequence")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 4000) // auto add id when add new product (unique id)
+    @NotNull
+    @Size(max = 50)
     private String name;
 
     @ManyToOne

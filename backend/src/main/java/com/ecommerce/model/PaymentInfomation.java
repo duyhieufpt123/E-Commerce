@@ -3,21 +3,20 @@ package com.ecommerce.model;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Table;
-import java.util.Objects;
 
-@Table(name = "payment_infomation")
 public class PaymentInfomation {
 
-    @Column(nullable = true, unique = false, length = 4000) //auto add id when add new product (unique id)
+    @Column(name = "cardholder_name")
     private String cardholderName;
 
+    @Column(name = "card_number")
     private String cardNumber;
 
+    @Column(name = "expiration_date")
     private LocalDate expirationDate;
 
+    @Column(name = "cvv")
     private String cvv;
-
 
     public PaymentInfomation() {
     }
@@ -61,50 +60,4 @@ public class PaymentInfomation {
         this.cvv = cvv;
     }
 
-    public PaymentInfomation cardholderName(String cardholderName) {
-        setCardholderName(cardholderName);
-        return this;
-    }
-
-    public PaymentInfomation cardNumber(String cardNumber) {
-        setCardNumber(cardNumber);
-        return this;
-    }
-
-    public PaymentInfomation expirationDate(LocalDate expirationDate) {
-        setExpirationDate(expirationDate);
-        return this;
-    }
-
-    public PaymentInfomation cvv(String cvv) {
-        setCvv(cvv);
-        return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof PaymentInfomation)) {
-            return false;
-        }
-        PaymentInfomation paymentInfomation = (PaymentInfomation) o;
-        return Objects.equals(cardholderName, paymentInfomation.cardholderName) && Objects.equals(cardNumber, paymentInfomation.cardNumber) && Objects.equals(expirationDate, paymentInfomation.expirationDate) && Objects.equals(cvv, paymentInfomation.cvv);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cardholderName, cardNumber, expirationDate, cvv);
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-            " cardholderName='" + getCardholderName() + "'" +
-            ", cardNumber='" + getCardNumber() + "'" +
-            ", expirationDate='" + getExpirationDate() + "'" +
-            ", cvv='" + getCvv() + "'" +
-            "}";
-    }
-    
 }
