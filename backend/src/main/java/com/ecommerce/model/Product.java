@@ -4,9 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
-
-import org.springframework.cglib.core.Local;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -14,15 +13,10 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
-
-import java.util.Objects;
 
 @Entity
 public class Product {
@@ -39,6 +33,9 @@ public class Product {
 
     @Column(name = "discounted_price")
     private int discountedPrice;
+
+    @Column(name = "discounted_percent")
+    private int discountedPercent;
 
     @Column(name = "quantity")
     private int quantity;
@@ -75,14 +72,15 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long id, String title, String description, int price, int discountedPrice, int quantity,
-            String brand, String color, Set<Size> sizes, String imageUrl, List<Rating> ratings, List<Review> reviews,
-            int numRatings, Category category, LocalDateTime createdAt) {
+    public Product(Long id, String title, String description, int price, int discountedPrice, int discountedPercent,
+            int quantity, String brand, String color, Set<Size> sizes, String imageUrl, List<Rating> ratings,
+            List<Review> reviews, int numRatings, Category category, LocalDateTime createdAt) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.price = price;
         this.discountedPrice = discountedPrice;
+        this.discountedPercent = discountedPercent;
         this.quantity = quantity;
         this.brand = brand;
         this.color = color;
@@ -133,6 +131,14 @@ public class Product {
 
     public void setDiscountedPrice(int discountedPrice) {
         this.discountedPrice = discountedPrice;
+    }
+
+    public int getDiscountedPercent() {
+        return this.discountedPercent;
+    }
+
+    public void setDiscountedPercent(int discountedPercent) {
+        this.discountedPercent = discountedPercent;
     }
 
     public int getQuantity() {
@@ -240,6 +246,11 @@ public class Product {
         return this;
     }
 
+    public Product discountedPercent(int discountedPercent) {
+        setDiscountedPercent(discountedPercent);
+        return this;
+    }
+
     public Product quantity(int quantity) {
         setQuantity(quantity);
         return this;
@@ -300,18 +311,18 @@ public class Product {
         Product product = (Product) o;
         return Objects.equals(id, product.id) && Objects.equals(title, product.title)
                 && Objects.equals(description, product.description) && price == product.price
-                && discountedPrice == product.discountedPrice && quantity == product.quantity
-                && Objects.equals(brand, product.brand) && Objects.equals(color, product.color)
-                && Objects.equals(sizes, product.sizes) && Objects.equals(imageUrl, product.imageUrl)
-                && Objects.equals(ratings, product.ratings) && Objects.equals(reviews, product.reviews)
-                && numRatings == product.numRatings && Objects.equals(category, product.category)
-                && Objects.equals(createdAt, product.createdAt);
+                && discountedPrice == product.discountedPrice && discountedPercent == product.discountedPercent
+                && quantity == product.quantity && Objects.equals(brand, product.brand)
+                && Objects.equals(color, product.color) && Objects.equals(sizes, product.sizes)
+                && Objects.equals(imageUrl, product.imageUrl) && Objects.equals(ratings, product.ratings)
+                && Objects.equals(reviews, product.reviews) && numRatings == product.numRatings
+                && Objects.equals(category, product.category) && Objects.equals(createdAt, product.createdAt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, price, discountedPrice, quantity, brand, color, sizes, imageUrl,
-                ratings, reviews, numRatings, category, createdAt);
+        return Objects.hash(id, title, description, price, discountedPrice, discountedPercent, quantity, brand, color,
+                sizes, imageUrl, ratings, reviews, numRatings, category, createdAt);
     }
 
     @Override
@@ -322,6 +333,7 @@ public class Product {
                 ", description='" + getDescription() + "'" +
                 ", price='" + getPrice() + "'" +
                 ", discountedPrice='" + getDiscountedPrice() + "'" +
+                ", discountedPercent='" + getDiscountedPercent() + "'" +
                 ", quantity='" + getQuantity() + "'" +
                 ", brand='" + getBrand() + "'" +
                 ", color='" + getColor() + "'" +

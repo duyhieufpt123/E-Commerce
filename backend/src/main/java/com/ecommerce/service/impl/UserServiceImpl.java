@@ -1,30 +1,52 @@
 package com.ecommerce.service.impl;
 
-import java.util.ArrayList;
+import java.util.Optional;
 
-import org.hibernate.mapping.List;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.ecommerce.config.JwtProvider;
+import com.ecommerce.exception.UserException;
 import com.ecommerce.model.User;
 import com.ecommerce.repository.UserRepository;
+import com.ecommerce.service.UserService;
 
-public class UserServiceImpl implements UserDetailsService {
+@Service
+public class UserServiceImpl implements UserService {
 
+    @Autowired
     private UserRepository userRepository;
+    private JwtProvider jwtProvider;
+
+    public UserServiceImpl(UserRepository userRepository, JwtProvider jwtProvider) {
+        this.userRepository = userRepository;
+        this.jwtProvider = jwtProvider;
+    }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("user not found with email -" +
-                    username);
+    public User findUserById(Long userId) throws UserException {
+        // TODO Auto-generated method stub
+
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()) {
+            return user.get();
         }
-        java.util.List<GrantedAuthority> authorities = new ArrayList<>();
-        return new org.springframework.security.core.userdetails.User(user.getEmail(),
-                user.getPassword(), authorities);
+        throw new UserException("User not found with id: " + userId);
+    }
+
+    @Override
+    public User findUserProfileByJwt(String jwt) throws UserException {
+        // TODO Auto-generated method stub
+
+        String email = jwtProvider.getEmailFromToken(jwt);
+
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new UserException("User not found with email: " + email);
+        }
+
+        return user;
+
     }
 
 }

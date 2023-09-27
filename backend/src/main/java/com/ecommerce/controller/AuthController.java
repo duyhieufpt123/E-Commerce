@@ -1,5 +1,6 @@
 package com.ecommerce.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -19,21 +20,24 @@ import com.ecommerce.model.User;
 import com.ecommerce.repository.UserRepository;
 import com.ecommerce.request.LoginRequest;
 import com.ecommerce.response.AuthResponse;
-import com.ecommerce.service.impl.UserServiceImpl;
+import com.ecommerce.service.impl.CustomerUserServiceImpl;
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
+    @Autowired
     private UserRepository userRepository;
     private JwtProvider jwtProvider;
     private PasswordEncoder passwordEncoder;
-    private UserServiceImpl customUserService;
+    private CustomerUserServiceImpl customerUserService;
 
-    public AuthController(UserRepository userRepository) {
+    public AuthController(UserRepository userRepository, CustomerUserServiceImpl customerUserService,
+            PasswordEncoder passwordEncoder, JwtProvider jwtProvider) {
         this.userRepository = userRepository;
-        this.customUserService = customUserService;
+        this.customerUserService = customerUserService;
         this.passwordEncoder = passwordEncoder;
+        this.jwtProvider = jwtProvider;
     }
 
     @PostMapping("/signup")
@@ -64,29 +68,38 @@ public class AuthController {
 
         String token = jwtProvider.generateToken(authentication);
 
-        AuthResponse authResponse = new AuthResponse(token, "Signin Successfully");
+        AuthResponse authResponse = new AuthResponse();
+        authResponse.setJwt(token);
+        authResponse.setMessage("Signup Successfully");
 
         return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<AuthResponse> loginUserHandler(LoginRequest loginRequest) {
+    public ResponseEntity<AuthResponse> loginUserHandler(@RequestBody LoginRequest loginRequest) {
         String username = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
         Authentication authentication = authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return null;
+
+        String token = jwtProvider.generateToken(authentication);
+
+        AuthResponse authResponse = new AuthResponse();
+        authResponse.setJwt(token);
+        authResponse.setMessage("Signin Successfully");
+
+        return new ResponseEntity<AuthResponse>(authResponse, HttpStatus.CREATED);
     }
 
     private Authentication authenticate(String username, String password) {
-        UserDetails userDetails = customUserService.loadUserByUsername(username);
+        UserDetails userDetails = customerUserService.loadUserByUsername(username);
 
         if (userDetails == null) {
             throw new BadCredentialsException("Invalid Username");
         }
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-            throw new BadCredentialsException("Invalid Passsword");
+            throw new BadCredentialsException("Invalid Password");
         }
 
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
