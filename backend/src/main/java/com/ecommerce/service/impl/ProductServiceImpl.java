@@ -127,7 +127,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<Product> getAllProduct(String category, List<String> colors, List<String> sizes, Integer minPrice,
             Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize) {
-        // TODO Auto-generated method stub
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
 

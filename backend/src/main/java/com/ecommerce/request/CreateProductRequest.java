@@ -28,9 +28,7 @@ public class CreateProductRequest {
     private String imageUrl;
 
     private String topLevelCategory;
-
     private String secondLevelCategory;
-
     private String thirdLevelCategory;
 
     public CreateProductRequest() {
