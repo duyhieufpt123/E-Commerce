@@ -16,7 +16,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import java.util.Objects;
 
 @Entity
 public class User {
@@ -225,46 +224,6 @@ public class User {
     public User createAt(LocalDateTime createAt) {
         setCreateAt(createAt);
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof User)) {
-            return false;
-        }
-        User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(firstName, user.firstName)
-                && Objects.equals(lastName, user.lastName) && Objects.equals(password, user.password)
-                && Objects.equals(email, user.email) && Objects.equals(role, user.role)
-                && Objects.equals(mobile, user.mobile) && Objects.equals(address, user.address)
-                && Objects.equals(paymentInfomations, user.paymentInfomations) && Objects.equals(ratings, user.ratings)
-                && Objects.equals(reviews, user.reviews) && Objects.equals(createAt, user.createAt);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, password, email, role, mobile, address, paymentInfomations,
-                ratings, reviews, createAt);
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                " id='" + getId() + "'" +
-                ", firstName='" + getFirstName() + "'" +
-                ", lastName='" + getLastName() + "'" +
-                ", password='" + getPassword() + "'" +
-                ", email='" + getEmail() + "'" +
-                ", role='" + getRole() + "'" +
-                ", mobile='" + getMobile() + "'" +
-                ", address='" + getAddress() + "'" +
-                ", paymentInfomations='" + getPaymentInfomations() + "'" +
-                ", ratings='" + getRatings() + "'" +
-                ", reviews='" + getReviews() + "'" +
-                ", createAt='" + getCreateAt() + "'" +
-                "}";
     }
 
 }

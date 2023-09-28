@@ -3,9 +3,16 @@ package com.ecommerce.service;
 import java.util.List;
 
 import com.ecommerce.exception.OrderException;
+import com.ecommerce.model.Address;
 import com.ecommerce.model.Order;
+import com.ecommerce.model.User;
 
 public interface OrderService {
+
+    public Order createOrder(User user, Address shippingAddress);
+
+    public List<Order> getAllOrders();
+
     public Order findOrderById(Long orderId) throws OrderException;
 
     public List<Order> usersOrderHistory(Long userId);
@@ -19,4 +26,6 @@ public interface OrderService {
     public Order deliveredOrder(Long orderId) throws OrderException;
 
     public Order canceledOrder(Long orderId) throws OrderException;
+
+    public Order deleteOrder(Long orderId) throws Exception;
 }

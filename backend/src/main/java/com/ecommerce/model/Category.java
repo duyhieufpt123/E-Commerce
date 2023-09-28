@@ -1,18 +1,13 @@
 package com.ecommerce.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import java.util.Objects;
 
 @Entity
 public class Category {
@@ -90,33 +85,6 @@ public class Category {
     public Category level(int level) {
         setLevel(level);
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Category)) {
-            return false;
-        }
-        Category category = (Category) o;
-        return Objects.equals(id, category.id) && Objects.equals(name, category.name)
-                && Objects.equals(parentCategory, category.parentCategory) && level == category.level;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, parentCategory, level);
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                " id='" + getId() + "'" +
-                ", name='" + getName() + "'" +
-                ", parentCategory='" + getParentCategory() + "'" +
-                ", level='" + getLevel() + "'" +
-                "}";
     }
 
 }

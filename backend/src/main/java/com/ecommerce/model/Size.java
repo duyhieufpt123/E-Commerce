@@ -1,8 +1,7 @@
 package com.ecommerce.model;
 
-import java.util.Objects;
-
 public class Size {
+
     private String name;
     private int quantity;
 
@@ -38,30 +37,6 @@ public class Size {
     public Size quantity(int quantity) {
         setQuantity(quantity);
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Size)) {
-            return false;
-        }
-        Size size = (Size) o;
-        return Objects.equals(name, size.name) && quantity == size.quantity;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, quantity);
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                " name='" + getName() + "'" +
-                ", quantity='" + getQuantity() + "'" +
-                "}";
     }
 
 }

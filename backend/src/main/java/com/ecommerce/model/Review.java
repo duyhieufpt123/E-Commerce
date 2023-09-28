@@ -4,17 +4,12 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
-
-import java.util.Objects;
 
 @Entity
 public class Review {
@@ -109,35 +104,6 @@ public class Review {
     public Review createdAt(LocalDateTime createdAt) {
         setCreatedAt(createdAt);
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Review)) {
-            return false;
-        }
-        Review review = (Review) o;
-        return Objects.equals(id, review.id) && Objects.equals(review, review.review)
-                && Objects.equals(product, review.product) && Objects.equals(user, review.user)
-                && Objects.equals(createdAt, review.createdAt);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, review, product, user, createdAt);
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                " id='" + getId() + "'" +
-                ", review='" + getReview() + "'" +
-                ", product='" + getProduct() + "'" +
-                ", user='" + getUser() + "'" +
-                ", createdAt='" + getCreatedAt() + "'" +
-                "}";
     }
 
 }
