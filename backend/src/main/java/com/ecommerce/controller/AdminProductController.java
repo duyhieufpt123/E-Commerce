@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecommerce.exception.ProductException;
@@ -49,9 +50,21 @@ public class AdminProductController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Product>> getAllProduct() {
-        Page<Product> productPage = productService.getAllProduct(null, null, null, null, null, null, null, null, null,
-                null);
+    public ResponseEntity<List<Product>> getAllProduct(
+            @RequestParam String category,
+            @RequestParam List<String> color,
+            @RequestParam List<String> size,
+            @RequestParam Integer minPrice,
+            @RequestParam Integer maxPrice,
+            @RequestParam Integer minDiscount,
+            @RequestParam String sort,
+            @RequestParam String stock,
+            @RequestParam Integer pageNumber,
+            @RequestParam Integer pageSize) {
+
+        Page<Product> productPage = productService.getAllProduct(
+                category, color, size, minPrice, maxPrice, minDiscount, sort, stock, pageNumber, pageSize);
+
         List<Product> products = productPage.getContent();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
