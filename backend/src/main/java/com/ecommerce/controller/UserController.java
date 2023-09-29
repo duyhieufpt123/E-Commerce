@@ -23,6 +23,6 @@ public class UserController {
     public ResponseEntity<User> getUserProfileHandler(
             @RequestHeader("Authorization") String jwt) throws UserException {
         User user = userService.findUserProfileByJwt(jwt);
-        return new ResponseEntity<User>(user, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
     }
 }
