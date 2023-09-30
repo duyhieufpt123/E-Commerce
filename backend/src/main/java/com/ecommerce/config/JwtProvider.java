@@ -9,13 +9,12 @@ import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtProvider {
 
-    SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    SecretKey key = Keys.hmacShaKeyFor(JwtConstant.SECRET_KEY.getBytes());
 
     public String generateToken(Authentication auth) {
         String jwt = Jwts.builder().setIssuedAt(new Date()).setExpiration(new Date(new Date().getTime() + 846000000))
@@ -25,6 +24,7 @@ public class JwtProvider {
     }
 
     public String getEmailFromToken(String jwt) {
+
         jwt = jwt.substring(7);
 
         Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt).getBody();
@@ -33,4 +33,5 @@ public class JwtProvider {
 
         return email;
     }
+
 }
