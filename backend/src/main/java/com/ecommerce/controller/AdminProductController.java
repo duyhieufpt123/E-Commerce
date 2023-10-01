@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,25 +51,26 @@ public class AdminProductController {
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Product>> getAllProduct(
-            @RequestParam String category,
-            @RequestParam List<String> color,
-            @RequestParam List<String> size,
-            @RequestParam Integer minPrice,
-            @RequestParam Integer maxPrice,
-            @RequestParam Integer minDiscount,
-            @RequestParam String sort,
-            @RequestParam String stock,
-            @RequestParam Integer pageNumber,
-            @RequestParam Integer pageSize) {
+@GetMapping("/all")
+public ResponseEntity<Page<Product>> getAllProduct(
+        @RequestParam String category,
+        @RequestParam List<String> color,
+        @RequestParam List<String> size,
+        @RequestParam Integer minPrice,
+        @RequestParam Integer maxPrice,
+        @RequestParam Integer minDiscount,
+        @RequestParam String sort,
+        @RequestParam String stock,
+        @RequestParam Integer pageNumber,
+        @RequestParam Integer pageSize) {
 
-        Page<Product> productPage = productService.getAllProduct(
-                category, color, size, minPrice, maxPrice, minDiscount, sort, stock, pageNumber, pageSize);
+    Pageable pageable = PageRequest.of(pageNumber, pageSize);
+    Page<Product> productPage = productService.getAllProduct(
+            category, color, size, minPrice, maxPrice, minDiscount, sort, stock, pageable);
 
-        List<Product> products = productPage.getContent();
-        return new ResponseEntity<>(products, HttpStatus.OK);
-    }
+    return new ResponseEntity<>(productPage, HttpStatus.OK);
+}
+
 
     @PutMapping("/{productId}/update")
     public ResponseEntity<Product> updateProduct(@RequestBody Product req, @PathVariable Long productId)
