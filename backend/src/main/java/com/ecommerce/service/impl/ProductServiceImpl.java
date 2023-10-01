@@ -135,34 +135,46 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> getAllProduct(String category, List<String> colors, List<String> sizes, Integer minPrice,
-            Integer maxPrice, Integer minDiscount, String sort, String stock, Integer pageNumber, Integer pageSize) {
+                                       Integer maxPrice, Integer minDiscount, String sort, String stock,
+                                       Integer pageNumber, Integer pageSize) {
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
-        List<Product> products = productRepository.filterProducts(category, minPrice, maxPrice, minDiscount, sort);
+        Page<Product> products = productRepository.filterProducts(
+                category,
+                minPrice,
+                maxPrice,
+                minDiscount,
+                sort,
+                pageable
+        );
 
-        if (colors.isEmpty()) {
-            products = products.stream().filter(p -> colors.stream().anyMatch(c -> c.equalsIgnoreCase(p.getColor())))
+        List<Product> filteredProducts = products.getContent();
+
+        if (!colors.isEmpty()) {
+            filteredProducts = filteredProducts.stream()
+                    .filter(product -> colors.contains(product.getColor()))
                     .collect(Collectors.toList());
         }
+
         if (stock != null) {
             if (stock.equals("in_stock")) {
-                products = products.stream().filter(p -> p.getQuantity() > 0).collect(Collectors.toList());
+                filteredProducts = filteredProducts.stream()
+                        .filter(product -> product.getQuantity() > 0)
+                        .collect(Collectors.toList());
             } else if (stock.equals("out_of_stock")) {
-                products = products.stream().filter(p -> p.getQuantity() < 1).collect(Collectors.toList());
+                filteredProducts = filteredProducts.stream()
+                        .filter(product -> product.getQuantity() <= 0)
+                        .collect(Collectors.toList());
             }
         }
 
-        int startIndex = (int) pageable.getOffset();
-        int endIndex = Math.min(startIndex + pageable.getPageSize(), products.size());
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), filteredProducts.size());
 
-        List<Product> pageContent = products.subList(startIndex, endIndex);
+        Page<Product> filteredPage = new PageImpl<>(filteredProducts.subList(start, end), pageable, filteredProducts.size());
 
-        // category = category == null ? null : category;
-        Page<Product> filteredProducts = new PageImpl<>(pageContent, pageable, products.size());
-        log.info("Products returned: " + products.size());
-
-        return filteredProducts;
+        return filteredPage;
     }
 
 }
