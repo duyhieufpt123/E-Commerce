@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -25,8 +24,10 @@ public class Product {
     @GeneratedValue
     private Long id;
 
+    @Column(length = 100)
     private String title;
 
+    @Column(length = 1000)
     private String description;
 
     private int price;
@@ -70,6 +71,8 @@ public class Product {
     private LocalDateTime createdAt;
 
     public Product() {
+        reviews = new ArrayList<>();
+        ratings = new ArrayList<>();
     }
 
     public Product(Long id, String title, String description, int price, int discountedPrice, int discountedPercent,
@@ -299,52 +302,6 @@ public class Product {
     public Product createdAt(LocalDateTime createdAt) {
         setCreatedAt(createdAt);
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Product)) {
-            return false;
-        }
-        Product product = (Product) o;
-        return Objects.equals(id, product.id) && Objects.equals(title, product.title)
-                && Objects.equals(description, product.description) && price == product.price
-                && discountedPrice == product.discountedPrice && discountedPercent == product.discountedPercent
-                && quantity == product.quantity && Objects.equals(brand, product.brand)
-                && Objects.equals(color, product.color) && Objects.equals(sizes, product.sizes)
-                && Objects.equals(imageUrl, product.imageUrl) && Objects.equals(ratings, product.ratings)
-                && Objects.equals(reviews, product.reviews) && numRatings == product.numRatings
-                && Objects.equals(category, product.category) && Objects.equals(createdAt, product.createdAt);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, title, description, price, discountedPrice, discountedPercent, quantity, brand, color,
-                sizes, imageUrl, ratings, reviews, numRatings, category, createdAt);
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                " id='" + getId() + "'" +
-                ", title='" + getTitle() + "'" +
-                ", description='" + getDescription() + "'" +
-                ", price='" + getPrice() + "'" +
-                ", discountedPrice='" + getDiscountedPrice() + "'" +
-                ", discountedPercent='" + getDiscountedPercent() + "'" +
-                ", quantity='" + getQuantity() + "'" +
-                ", brand='" + getBrand() + "'" +
-                ", color='" + getColor() + "'" +
-                ", sizes='" + getSizes() + "'" +
-                ", imageUrl='" + getImageUrl() + "'" +
-                ", ratings='" + getRatings() + "'" +
-                ", reviews='" + getReviews() + "'" +
-                ", numRatings='" + getNumRatings() + "'" +
-                ", category='" + getCategory() + "'" +
-                ", createdAt='" + getCreatedAt() + "'" +
-                "}";
     }
 
 }

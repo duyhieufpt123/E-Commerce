@@ -19,10 +19,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // @GetMapping("/")
+    // public ResponseEntity<List<User>> getAllUsers() throws UserException {
+    // List<User> users = userService.findAllUsers();
+    // return new ResponseEntity<>(users, HttpStatus.OK);
+    // }
+
     @GetMapping("/profile")
     public ResponseEntity<User> getUserProfileHandler(
             @RequestHeader("Authorization") String jwt) throws UserException {
         User user = userService.findUserProfileByJwt(jwt);
         return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
     }
+
 }

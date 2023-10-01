@@ -1,7 +1,6 @@
 package com.ecommerce.request;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import com.ecommerce.model.Size;
@@ -219,51 +218,6 @@ public class CreateProductRequest {
     public CreateProductRequest thirdLevelCategory(String thirdLevelCategory) {
         setThirdLevelCategory(thirdLevelCategory);
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof CreateProductRequest)) {
-            return false;
-        }
-        CreateProductRequest createProductRequest = (CreateProductRequest) o;
-        return Objects.equals(title, createProductRequest.title)
-                && Objects.equals(description, createProductRequest.description) && price == createProductRequest.price
-                && discountedPrice == createProductRequest.discountedPrice
-                && discountPercent == createProductRequest.discountPercent && quantity == createProductRequest.quantity
-                && Objects.equals(brand, createProductRequest.brand)
-                && Objects.equals(color, createProductRequest.color) && Objects.equals(size, createProductRequest.size)
-                && Objects.equals(imageUrl, createProductRequest.imageUrl)
-                && Objects.equals(topLevelCategory, createProductRequest.topLevelCategory)
-                && Objects.equals(secondLevelCategory, createProductRequest.secondLevelCategory)
-                && Objects.equals(thirdLevelCategory, createProductRequest.thirdLevelCategory);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(title, description, price, discountedPrice, discountPercent, quantity, brand, color, size,
-                imageUrl, topLevelCategory, secondLevelCategory, thirdLevelCategory);
-    }
-
-    @Override
-    public String toString() {
-        return "{" +
-                " title='" + getTitle() + "'" +
-                ", description='" + getDescription() + "'" +
-                ", price='" + getPrice() + "'" +
-                ", discountedPrice='" + getDiscountedPrice() + "'" +
-                ", discountPercent='" + getDiscountPercent() + "'" +
-                ", quantity='" + getQuantity() + "'" +
-                ", brand='" + getBrand() + "'" +
-                ", color='" + getColor() + "'" +
-                ", size='" + getSize() + "'" +
-                ", imageUrl='" + getImageUrl() + "'" +
-                ", topLevelCategory='" + getTopLevelCategory() + "'" +
-                ", secondLevelCategory='" + getSecondLevelCategory() + "'" +
-                ", thirdLevelCategory='" + getThirdLevelCategory() + "'" +
-                "}";
     }
 
 }

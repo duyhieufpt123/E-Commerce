@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -24,9 +26,15 @@ import com.ecommerce.service.UserService;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    private static final Logger log = LogManager.getLogger(ProductServiceImpl.class);
+
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
     private UserService userService;
+
+    @Autowired
     private CategoryRepository categoryRepository;
 
     public ProductServiceImpl(ProductRepository productRepository, UserService userService,
@@ -71,6 +79,7 @@ public class ProductServiceImpl implements ProductService {
 
         Product product = new Product();
         product.setTitle(req.getTitle());
+
         product.setColor(req.getColor());
         product.setDescription(req.getDescription());
         product.setBrand(req.getBrand());
@@ -149,7 +158,9 @@ public class ProductServiceImpl implements ProductService {
 
         List<Product> pageContent = products.subList(startIndex, endIndex);
 
+        // category = category == null ? null : category;
         Page<Product> filteredProducts = new PageImpl<>(pageContent, pageable, products.size());
+        log.info("Products returned: " + products.size());
 
         return filteredProducts;
     }

@@ -16,12 +16,20 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
     private JwtProvider jwtProvider;
 
     public UserServiceImpl(UserRepository userRepository, JwtProvider jwtProvider) {
         this.userRepository = userRepository;
         this.jwtProvider = jwtProvider;
     }
+
+    // @Override
+    // public List<User> findAllUsers() throws UserException {
+
+    // return userRepository.findAll();
+    // }
 
     @Override
     public User findUserById(Long userId) throws UserException {

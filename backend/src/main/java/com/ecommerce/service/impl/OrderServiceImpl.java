@@ -28,10 +28,20 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private CartService cartService;
+
+    @Autowired
     private AddressRepository addressRepository;
+
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
     private OrderItemRepository orderItemRepository;
+
+    @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
     private OrderItemService orderItemService;
 
     public OrderServiceImpl(

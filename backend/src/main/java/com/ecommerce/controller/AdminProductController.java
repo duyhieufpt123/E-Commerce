@@ -29,7 +29,7 @@ public class AdminProductController {
     @Autowired
     private ProductService productService;
 
-    @PostMapping(value = "/")
+    @PostMapping("/")
     public ResponseEntity<Product> createProduct(@RequestBody CreateProductRequest req) {
 
         Product product = productService.createProduct(req);

@@ -20,6 +20,8 @@ public class RatingServiceImpl implements RatingService {
 
     @Autowired
     private RatingRepository ratingRepository;
+
+    @Autowired
     private ProductService productService;
 
     public RatingServiceImpl(RatingRepository ratingRepository, ProductService productService) {

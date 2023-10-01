@@ -21,7 +21,11 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Autowired
     private CartItemRepository cartItemRepository;
+
+    @Autowired
     private UserService userService;
+
+    @Autowired
     private CartRepository cartRepository;
 
     public CartItemServiceImpl(CartItemRepository cartItemRepository, UserService userService,
