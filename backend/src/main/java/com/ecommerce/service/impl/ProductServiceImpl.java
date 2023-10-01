@@ -135,11 +135,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> getAllProduct(String category, List<String> colors, List<String> sizes, Integer minPrice,
-                                       Integer maxPrice, Integer minDiscount, String sort, String stock,
-                                       Integer pageNumber, Integer pageSize) {
-
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-
+            Integer maxPrice, Integer minDiscount, String sort, String stock, Pageable pageable) {
+    
         Page<Product> products = productRepository.filterProducts(
                 category,
                 minPrice,
@@ -148,15 +145,15 @@ public class ProductServiceImpl implements ProductService {
                 sort,
                 pageable
         );
-
+    
         List<Product> filteredProducts = products.getContent();
-
+    
         if (!colors.isEmpty()) {
             filteredProducts = filteredProducts.stream()
                     .filter(product -> colors.contains(product.getColor()))
                     .collect(Collectors.toList());
         }
-
+    
         if (stock != null) {
             if (stock.equals("in_stock")) {
                 filteredProducts = filteredProducts.stream()
@@ -168,12 +165,12 @@ public class ProductServiceImpl implements ProductService {
                         .collect(Collectors.toList());
             }
         }
-
+    
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), filteredProducts.size());
-
+    
         Page<Product> filteredPage = new PageImpl<>(filteredProducts.subList(start, end), pageable, filteredProducts.size());
-
+    
         return filteredPage;
     }
 

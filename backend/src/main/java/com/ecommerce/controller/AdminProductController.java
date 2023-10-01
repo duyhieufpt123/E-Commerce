@@ -51,26 +51,25 @@ public class AdminProductController {
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
 
-@GetMapping("/all")
-public ResponseEntity<Page<Product>> getAllProduct(
-        @RequestParam String category,
-        @RequestParam List<String> color,
-        @RequestParam List<String> size,
-        @RequestParam Integer minPrice,
-        @RequestParam Integer maxPrice,
-        @RequestParam Integer minDiscount,
-        @RequestParam String sort,
-        @RequestParam String stock,
-        @RequestParam Integer pageNumber,
-        @RequestParam Integer pageSize) {
+    @GetMapping("/all")
+    public ResponseEntity<Page<Product>> getAllProduct(
+            @RequestParam String category,
+            @RequestParam List<String> color,
+            @RequestParam List<String> size,
+            @RequestParam Integer minPrice,
+            @RequestParam Integer maxPrice,
+            @RequestParam Integer minDiscount,
+            @RequestParam String sort,
+            @RequestParam String stock,
+            @RequestParam Integer pageNumber,
+            @RequestParam Integer pageSize) {
 
-    Pageable pageable = PageRequest.of(pageNumber, pageSize);
-    Page<Product> productPage = productService.getAllProduct(
-            category, color, size, minPrice, maxPrice, minDiscount, sort, stock, pageable);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Product> productPage = productService.getAllProduct(
+                category, color, size, minPrice, maxPrice, minDiscount, sort, stock, pageable);
 
-    return new ResponseEntity<>(productPage, HttpStatus.OK);
-}
-
+        return new ResponseEntity<>(productPage, HttpStatus.OK);
+    }
 
     @PutMapping("/{productId}/update")
     public ResponseEntity<Product> updateProduct(@RequestBody Product req, @PathVariable Long productId)

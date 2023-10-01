@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,12 +37,13 @@ public class UserProductController {
             @RequestParam Integer pageNumber,
             @RequestParam Integer pageSize) {
 
-        Page<Product> res = productService.getAllProduct(category, color, size, minPrice, maxPrice, minDiscount, sort,
-                stock, pageNumber, pageSize);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Product> productPage = productService.getAllProduct(
+                category, color, size, minPrice, maxPrice, minDiscount, sort, stock, pageable);
 
         System.out.println("Complete products");
 
-        return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(productPage, HttpStatus.OK);
     }
 
     @GetMapping("/products/{productId}")
