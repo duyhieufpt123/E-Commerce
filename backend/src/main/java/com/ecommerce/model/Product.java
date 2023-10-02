@@ -49,7 +49,7 @@ public class Product {
 
     @Embedded
     @ElementCollection
-    @Column(name = "sizes")
+    @Column(name = "size")
     private Set<Size> sizes = new HashSet<>();
 
     @Column(name = "image_url")

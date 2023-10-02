@@ -27,6 +27,8 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
     private UserService userService;
 
     @PostMapping("/")

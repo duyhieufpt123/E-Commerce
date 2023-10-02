@@ -1,8 +1,12 @@
 package com.ecommerce.model;
 
-public class Size {
+import jakarta.persistence.Column;
 
+public class Size {
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "quantity")
     private int quantity;
 
     public Size() {

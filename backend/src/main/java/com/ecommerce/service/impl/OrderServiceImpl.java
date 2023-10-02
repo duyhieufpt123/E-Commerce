@@ -127,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> usersOrderHistory(Long userId) {
 
-        List<Order> orders = orderRepository.getUserOrders(userId);
+        List<Order> orders = orderRepository.getUsersOrders(userId);
         return orders;
     }
 
